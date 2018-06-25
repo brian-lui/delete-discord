@@ -1,5 +1,3 @@
-delete-discord
-
 WARNING: This script violates the Discord Terms of Service if used for a non-bot account! ONLY use for bot accounts!
 
 
