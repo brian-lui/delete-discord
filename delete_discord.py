@@ -55,7 +55,7 @@ class ClientManager():
 
 		failed_channels = []
 		for i in range(len(channels)):
-			self.current_channel = i
+			self.selected_channel = i
 			failure = await self.delete_channel_coro(True)
 			if failure:
 				failed_channels.append(failure)
