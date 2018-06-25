@@ -100,7 +100,6 @@ class ClientManager():
 			print("Deleted " + str(count) + " messages from channel " + current_channel.name)
 		except:
 			print("Didn't manage to successfully delete from " + current_channel.name)
-			await self.client.logout()
 			return current_channel.name
 
 		if called_from_server_delete is None:
