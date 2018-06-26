@@ -1,7 +1,61 @@
+"""
+WARNING: Use for bot accounts only! Using this for user (human) accounts is a
+serious Discord TOS violation.
+
+This script deletes your Discord bot account's messages from specified servers
+and/or channels. Requires discord.py.
+
+Usage:
+
+Run delete_discord.py
+
+Enter your username/password that you use to login to discord.
+
+At the menu, you can choose the following:
+"1. Select a server"
+Provide the name of the server (not the ID). You can get a list of servers by
+using menu option 3.
+
+"2. Select a channel"
+Provide the index of the channel (not the name). You can get a list of channels
+by using menu option 4.
+
+"3. Print a list of all servers this account has joined"
+Pretty self-explanatory.
+
+"4. Print a list of all channels on the selected server"
+Pretty self-explanatory. A server must be selected with menu option 1.
+
+"5. Delete all messages on the selected server"
+Delete all messages that your bot wrote on all channels in the selected server.
+Takes a while! A server must be selected with menu option 1.
+
+"6. Delete all messages in the selected channel on the selected server"
+Delete all messages that your bot wrote on the selected channels in the
+selected server. Takes a while! A server must be selected with menu option 1,
+and a channel must be selected with option 2.
+
+"7. Quit"
+Quit.
+"""
+
 import asyncio
 import discord
 
 class ClientManager():
+	""" Handles the user input and sends it to the Discord servers.
+	Event loop for user input is handled in menu_loop. Each time an operation
+	is selected that needs to communicate with the server, the following steps
+	are performed in run_coroutine:
+		1. Create a new async event loop
+		2. Initialize a new Discord client object
+		3. Add the requested coroutine to the queue
+		4. Login, run the coroutine as the only operation, logout
+
+	Look if you're so good at coding you can make a better workflow that
+	doesn't involve logging in and out for every operation, ok?
+	"""
+
 	def __init__(self):
 		self.client = None
 		self.quit_now = False
@@ -105,13 +159,13 @@ class ClientManager():
 		if called_from_server_delete is None:
 			await self.client.logout()
 
-	"""
-	This function gets stuff from the discord. It logs in and logs out for each
-	operation because I can't figure out how to pass control back without
-	logging out lol. I only know so much :confounded:
-	Uh anyway, this function accepts an async function with no arguments
-	"""
 	def run_coroutine(self, coro):
+		""" This function gets stuff from the discord. It logs in and logs out
+		for each operation because I can't figure out how to pass control back
+		without logging out lol. I only know so much :confounded:
+		Uh anyway, this function accepts an async function with no arguments
+		"""
+
 		asyncio.set_event_loop(asyncio.new_event_loop())
 		self.client = discord.Client()
 		self.client.loop.create_task(coro())
